@@ -1,3 +1,6 @@
+%bcond_without gdk_pixbuf
+%bcond_without gimp
+
 %define libname %mklibname jxl 0
 %define threadslibname %mklibname jxl_threads 0
 %define devname %mklibname -d jxl
@@ -6,7 +9,7 @@
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
 Version:	0.3.4
-Release:	1
+Release:	2
 Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v%{version}/jpeg-xl-v%{version}.tar.bz2
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
@@ -32,12 +35,28 @@ BuildRequires:	pkgconfig(libwebpmux)
 BuildRequires:	pkgconfig(libavif)
 BuildRequires:	giflib-devel
 
+%if %{with gdk_pixbuf}
+BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
+%endif
+%if %{with gimp}
+BuildRequires:	pkgconfig(gimp-2.0)
+BuildRequires:	pkgconfig(gimpui-2.0)
+%endif
+
 %description
 Library for working with JPEG XL files
+
+%package tools
+Summary:	Tools for working with JPEG XL files
+Requires:	%{libname} = %{EVRD}
+
+%description tools
+Tools for working with JPEG XL files
 
 %package -n %{libname}
 Summary:	Library for working with JPEG XL files
 Requires:	%{threadslibname} = %{EVRD}
+Requires:	%{name} = %{EVRD}
 
 %description -n %{libname}
 Library for working with JPEG XL files
@@ -62,6 +81,22 @@ Requires:	%{devname} = %{EVRD}
 %description -n %{staticname}
 Static library for the JPEG XL library
 
+%package gdk-pixbuf
+Summary:	JPEG XL plugin for gdk-pixbuf
+Requires:	%{libname} = %{EVRD}
+Supplements:	gdk-pixbuf2.0
+
+%description gdk-pixbuf
+JPEG XL plugin for gdk-pixbuf
+
+%package gimp
+Summary:	GIMP plugin for handling JPEG XL files
+Requires:	%{libname} = %{EVRD}
+Supplements:	gimp
+
+%description gimp
+GIMP plugin for handling JPEG XL files
+
 %prep
 %setup -n %{name}-v%{version}
 cd third_party
@@ -81,6 +116,9 @@ cd ..
 # for a clang 12 crash during linking
 %cmake \
 	-DJPEGXL_ENABLE_BENCHMARK:BOOL=OFF \
+%if %{with gdk_pixbuf} || %{with gimp}
+	-DJPEGXL_ENABLE_PLUGINS:BOOL=ON \
+%endif
 	-G Ninja
 
 %build
@@ -90,6 +128,9 @@ cd ..
 %ninja_install -C build
 
 %files
+%{_datadir}/mime/packages/image-jxl.xml
+
+%files tools
 %{_bindir}/cjxl
 %{_bindir}/djxl
 
@@ -110,3 +151,14 @@ cd ..
 %{_libdir}/libjxl.a
 %{_libdir}/libjxl_dec.a
 %{_libdir}/libjxl_threads.a
+
+%if %{with gdk_pixbuf}
+%files gdk-pixbuf
+%{_libdir}/gdk-pixbuf-2.0/*/loaders/libpixbufloader-jxl.so
+%{_datadir}/thumbnailers/jxl.thumbnailer
+%endif
+
+%if %{with gimp}
+%files gimp
+%{_libdir}/gimp/*/plug-ins/file-jxl
+%endif
