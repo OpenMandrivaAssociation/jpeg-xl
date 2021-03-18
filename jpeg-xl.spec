@@ -11,6 +11,7 @@ Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v%{version}/jpeg-xl-v%{version
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/64374756e03700d649f897dbd98c95e78c30c7da.tar.gz
+Patch0:		jpeg-xl-make-helpers-static.patch
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
 BuildRequires:	pkgconfig(libhwy)
@@ -62,7 +63,7 @@ Requires:	%{devname} = %{EVRD}
 Static library for the JPEG XL library
 
 %prep
-%autosetup -p1 -n %{name}-v%{version}
+%setup -n %{name}-v%{version}
 cd third_party
 tar xf %{S:1}
 rmdir lodepng
@@ -74,6 +75,8 @@ cd skcms
 tar xf %{S:3}
 cd ..
 cd ..
+%autopatch -p1
+
 # FIXME disabling JPEGXL_ENABLE_BENCHMARK is a workaround
 # for a clang 12 crash during linking
 %cmake \

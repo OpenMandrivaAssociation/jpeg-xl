@@ -1,0 +1,21 @@
+diff -up jpeg-xl-v0.3.4/third_party/sjpeg/CMakeLists.txt.omv~ jpeg-xl-v0.3.4/third_party/sjpeg/CMakeLists.txt
+--- jpeg-xl-v0.3.4/third_party/sjpeg/CMakeLists.txt.omv~	2021-03-18 20:09:43.701345471 +0100
++++ jpeg-xl-v0.3.4/third_party/sjpeg/CMakeLists.txt	2021-03-18 20:10:18.703551142 +0100
+@@ -59,7 +59,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/
+ 
+ # Build the sjpeg library.
+ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/ ${SJPEG_DEP_INCLUDE_DIRS})
+-add_library(sjpeg ${CMAKE_CURRENT_SOURCE_DIR}/src/bit_writer.cc
++add_library(sjpeg STATIC ${CMAKE_CURRENT_SOURCE_DIR}/src/bit_writer.cc
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/bit_writer.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/colors_rgb.cc
+   ${CMAKE_CURRENT_SOURCE_DIR}/src/dichotomy.cc
+@@ -121,7 +121,7 @@ endif()
+ 
+ # build the utils library
+ include_directories(${SJPEG_DEP_IMG_INCLUDE_DIRS})
+-add_library(utils
++add_library(utils STATIC
+             ${CMAKE_CURRENT_SOURCE_DIR}/examples/utils.cc
+             ${CMAKE_CURRENT_SOURCE_DIR}/examples/utils.h
+ )
