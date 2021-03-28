@@ -8,13 +8,8 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-# IMPORTANT: PLEASE DO NOT UPDATE TO 0.3.5 FOR THE TIME BEING.
-# From #openmandriva-cooker:
-# [16:36:21] <BlueSwordM[m]> Anyway, I have a small warning for the Cooker repo.
-# [16:36:54] <BlueSwordM[m]> It's in regards to JXL 0.3.5: it has a bug that makes encoding some lossless images have broken decoding, and decoding of some images is also broken.
-# [16:37:09] <BlueSwordM[m]> Therefore, DO NOT UPDATE COOKER TO THE LATEST JXL BRANCH
-Version:	0.3.4
-Release:	2
+Version:	0.3.6
+Release:	1
 Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v%{version}/jpeg-xl-v%{version}.tar.bz2
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
