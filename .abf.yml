@@ -1,5 +1,5 @@
 sources:
   64374756e03700d649f897dbd98c95e78c30c7da.tar.gz: 66c56dabc60dc6ab480476dc66911b12dbcf4725
-  jpeg-xl-v0.3.7.tar.bz2: aeb26a222db7c24ef4e2c510d2fffe63475ddaf3
   lodepng.tar.gz: 8160fa0dd63aab17dcfa9a9b67e5a7902a7865f2
-  sjpeg.tar.gz: b6e5c149624afb9b94e093d9f28b09d459e801c6
+  sjpeg.tar.gz: 60f2654bc108c45df3b357ab5a880a8b0ed5840a
+  jpeg-xl-v0.4.x.tar.bz2: 3496ddd7fac50da6750a0962f317a95fbc673461

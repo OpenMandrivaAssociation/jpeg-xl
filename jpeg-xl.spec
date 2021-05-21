@@ -6,11 +6,15 @@
 %define devname %mklibname -d jxl
 %define staticname %mklibname -d -s jxl
 
+%define majorminor %(echo %{version} |cut -d. -f1-2)
+%define pre 20210521
+%define vtag %{?pre:%{majorminor}.x}%{!?pre:%{version}}
+
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.3.7
-Release:	1
-Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v%{version}/jpeg-xl-v%{version}.tar.bz2
+Version:	0.4.0
+Release:	%{?pre:0.%{pre}.}1
+Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v%{vtag}/jpeg-xl-v%{vtag}.tar.bz2
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/64374756e03700d649f897dbd98c95e78c30c7da.tar.gz
@@ -21,6 +25,8 @@ BuildRequires:	pkgconfig(libhwy)
 BuildRequires:	pkgconfig(opengl)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	cmake ninja
+# For man pages
+BuildRequires:	a2x
 License:	Apache 2.0
 
 # Not vital, only for transcoding tools
@@ -98,7 +104,7 @@ Supplements:	gimp
 GIMP plugin for handling JPEG XL files
 
 %prep
-%setup -n %{name}-v%{version}
+%setup -n %{name}-v%{vtag}
 cd third_party
 tar xf %{S:1}
 rmdir lodepng
@@ -133,6 +139,8 @@ cd ..
 %files tools
 %{_bindir}/cjxl
 %{_bindir}/djxl
+%{_mandir}/man1/cjxl.1*
+%{_mandir}/man1/djxl.1*
 
 %files -n %{libname}
 %{_libdir}/libjxl.so.0*
