@@ -7,17 +7,17 @@
 %define staticname %mklibname -d -s jxl
 
 %define majorminor %(echo %{version} |cut -d. -f1-2)
-%define pre 20210521
+#define pre 20210521
 %define vtag %{?pre:%{majorminor}.x}%{!?pre:%{version}}
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.4.0
+Version:	0.5
 Release:	%{?pre:0.%{pre}.}1
 Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v%{vtag}/jpeg-xl-v%{vtag}.tar.bz2
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
-Source3:	https://skia.googlesource.com/skcms/+archive/64374756e03700d649f897dbd98c95e78c30c7da.tar.gz
+Source3:	https://skia.googlesource.com/skcms/+archive/cf7d3f925b87bcf81a9d1bb8eca8b9bed9f99410.tar.gz
 Patch0:		jpeg-xl-make-helpers-static.patch
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
