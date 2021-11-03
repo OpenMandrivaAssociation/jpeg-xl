@@ -43,6 +43,7 @@ BuildRequires:	giflib-devel
 
 %if %{with gdk_pixbuf}
 BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
+BuildRequires:	xdg-utils
 %endif
 %if %{with gimp}
 BuildRequires:	pkgconfig(gimp-2.0)
