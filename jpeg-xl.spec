@@ -1,5 +1,6 @@
 %bcond_without gdk_pixbuf
 %bcond_without gimp
+%bcond_without java
 
 %define libname %mklibname jxl 0
 %define threadslibname %mklibname jxl_threads 0
@@ -12,19 +13,23 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.6.1
+Version:	0.7.0
 Release:	%{?pre:0.%{pre}.}1
-Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v%{vtag}/jpeg-xl-v%{vtag}.tar.bz2
+Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v0.7.x/jpeg-xl-v0.7.x.tar.bz2
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/cf7d3f925b87bcf81a9d1bb8eca8b9bed9f99410.tar.gz
 Patch0:		jpeg-xl-make-helpers-static.patch
+Patch1:		jpeg-xl-0.7-clang15.patch
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
 BuildRequires:	pkgconfig(libhwy)
 BuildRequires:	pkgconfig(opengl)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	cmake ninja
+%if %{with java}
+BuildRequires:	jdk-current
+%endif
 # For man pages
 BuildRequires:	a2x
 License:	Apache 2.0
@@ -104,11 +109,17 @@ Supplements:	gimp
 %description gimp
 GIMP plugin for handling JPEG XL files
 
+%package java
+Summary:	Java library for handling JPEG XL files
+Requires:	%{libname} = %{EVRD}
+
+%description java
+Java library for handling JPEG XL files
+
 %prep
-%setup -n %{name}-v%{vtag}
+%setup -n %{name}-v0.7.x
 cd third_party
 tar xf %{S:1}
-rmdir lodepng
 mv lodepng-master lodepng
 tar xf %{S:2}
 rmdir sjpeg
@@ -139,7 +150,9 @@ cd ..
 
 %files tools
 %{_bindir}/cjxl
+%{_bindir}/cjpeg_hdr
 %{_bindir}/djxl
+%{_bindir}/jxlinfo
 %{_mandir}/man1/cjxl.1*
 %{_mandir}/man1/djxl.1*
 
@@ -170,4 +183,10 @@ cd ..
 %if %{with gimp}
 %files gimp
 %{_libdir}/gimp/*/plug-ins/file-jxl
+%endif
+
+%if %{with java}
+%files java
+%{_libdir}/libjxl_jni.so
+%{_libdir}/org.jpeg.jpegxl.jar
 %endif
