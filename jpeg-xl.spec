@@ -1,6 +1,6 @@
 %bcond_without gdk_pixbuf
 %bcond_without gimp
-%bcond_with java
+%bcond_without java
 
 %define libname %mklibname jxl 0
 %define threadslibname %mklibname jxl_threads 0
@@ -132,6 +132,9 @@ cd ..
 %autopatch -p1
 
 . %{_sysconfdir}/profile.d/90java.sh
+
+# Debug java detection
+sed -i -e 's, QUIET,,g' tools/CMakeLists.txt
 
 # FIXME disabling JPEGXL_ENABLE_BENCHMARK is a workaround
 # for a clang 12 crash during linking
