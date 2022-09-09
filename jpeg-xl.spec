@@ -27,6 +27,7 @@ BuildRequires:	pkgconfig(libhwy)
 BuildRequires:	pkgconfig(opengl)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	cmake ninja
+BuildRequires:	doxygen
 %if %{with java}
 BuildRequires:	jdk-current
 %endif
@@ -129,6 +130,8 @@ tar xf %{S:3}
 cd ..
 cd ..
 %autopatch -p1
+
+. %{_sysconfdir}/profile.d/90java.sh
 
 # FIXME disabling JPEGXL_ENABLE_BENCHMARK is a workaround
 # for a clang 12 crash during linking
