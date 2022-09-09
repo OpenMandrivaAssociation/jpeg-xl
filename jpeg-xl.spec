@@ -1,6 +1,6 @@
 %bcond_without gdk_pixbuf
 %bcond_without gimp
-%bcond_without java
+%bcond_with java
 
 %define libname %mklibname jxl 0
 %define threadslibname %mklibname jxl_threads 0
