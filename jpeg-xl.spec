@@ -29,7 +29,7 @@ BuildRequires:	pkgconfig(glut)
 BuildRequires:	cmake ninja
 BuildRequires:	doxygen
 %if %{with java}
-BuildRequires:	jdk-current
+BuildRequires:	jdk-current jre-gui-current
 %endif
 # For man pages
 BuildRequires:	a2x
