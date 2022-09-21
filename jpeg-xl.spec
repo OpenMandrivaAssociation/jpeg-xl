@@ -15,7 +15,7 @@ Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
 Version:	0.7.0
 Release:	%{?pre:0.%{pre}.}1
-Source0:	https://gitlab.com/wg1/jpeg-xl/-/archive/v0.7.x/jpeg-xl-v0.7.x.tar.bz2
+Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v0.7.0.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/cf7d3f925b87bcf81a9d1bb8eca8b9bed9f99410.tar.gz
