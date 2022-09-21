@@ -118,7 +118,7 @@ Requires:	%{libname} = %{EVRD}
 Java library for handling JPEG XL files
 
 %prep
-%setup -n %{name}-v0.7.x
+%setup -qn libjxl-%{version}
 cd third_party
 tar xf %{S:1}
 mv lodepng-master lodepng
