@@ -20,7 +20,7 @@ Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/cf7d3f925b87bcf81a9d1bb8eca8b9bed9f99410.tar.gz
 Patch0:		jpeg-xl-make-helpers-static.patch
-Patch1:		jpeg-xl-0.7-clang15.patch
+#Patch1:		jpeg-xl-0.7-clang15.patch
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
 BuildRequires:	pkgconfig(libhwy)
