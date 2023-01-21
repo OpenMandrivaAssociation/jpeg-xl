@@ -1,11 +1,11 @@
-diff -up jpeg-xl-v0.7.x/tools/libjxl_test.c.omv~ jpeg-xl-v0.7.x/tools/libjxl_test.c
---- jpeg-xl-v0.7.x/tools/libjxl_test.c.omv~	2022-09-09 00:45:59.304206925 +0200
-+++ jpeg-xl-v0.7.x/tools/libjxl_test.c	2022-09-09 00:47:08.252017302 +0200
+diff -uraN libjxl-0.8.0/tools/libjxl_test.c omv-libjxl-0.8.0/tools/libjxl_test.c
+--- libjxl-0.8.0/tools/libjxl_test.c	2023-01-18 15:29:35.000000000 +0100
++++ omv-libjxl-0.8.0/tools/libjxl_test.c	2023-01-21 18:05:49.987835724 +0100
 @@ -9,7 +9,8 @@
  
  #include "jxl/decode.h"
  
--int main() {
+-int main(void) {
 +int main(int argc, char** argv) {
 +  (void) argc; (void) argv;
    if (!JxlDecoderVersion()) return 1;
