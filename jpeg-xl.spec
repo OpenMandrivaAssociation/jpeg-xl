@@ -2,8 +2,10 @@
 %bcond_without gimp
 %bcond_without java
 
-%define libname %mklibname jxl 0
-%define threadslibname %mklibname jxl_threads 0
+%define libname %mklibname jxl
+%define threadslibname %mklibname jxl_threads
+%define oldlibname %mklibname jxl 0
+%define oldthreadslibname %mklibname jxl_threads 0
 %define devname %mklibname -d jxl
 %define staticname %mklibname -d -s jxl
 
@@ -13,14 +15,13 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.7.0
+Version:	0.8.0
 Release:	%{?pre:0.%{pre}.}1
-Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v0.7.0.tar.gz
+Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
-Source3:	https://skia.googlesource.com/skcms/+archive/cf7d3f925b87bcf81a9d1bb8eca8b9bed9f99410.tar.gz
+Source3:	https://skia.googlesource.com/skcms/+archive/b25b07b4b07990811de121c0356155b2ba0f4318.tar.gz
 Patch0:		jpeg-xl-make-helpers-static.patch
-Patch1:		jpeg-xl-0.7-clang15.patch
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
 BuildRequires:	pkgconfig(libhwy)
@@ -70,12 +71,14 @@ Tools for working with JPEG XL files
 Summary:	Library for working with JPEG XL files
 Requires:	%{threadslibname} = %{EVRD}
 Requires:	%{name} = %{EVRD}
+%rename %{oldlibname}
 
 %description -n %{libname}
 Library for working with JPEG XL files
 
 %package -n %{threadslibname}
 Summary:	Threading library used by the JPEG XL library
+%rename %{oldthreadslibname}
 
 %description -n %{threadslibname}
 Threading library used by the JPEG XL library
