@@ -8,6 +8,8 @@
 %define oldthreadslibname %mklibname jxl_threads 0
 %define devname %mklibname -d jxl
 %define staticname %mklibname -d -s jxl
+%define cmsname %mklibname jxl_cms
+%define extrasname %mklibname jxl_extras_codec
 
 %define majorminor %(echo %{version} |cut -d. -f1-2)
 #define pre 20210521
@@ -15,16 +17,17 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.8.2
-Release:	%{?pre:0.%{pre}.}2
+Version:	0.9.0
+Release:	%{?pre:0.%{pre}.}1
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/b25b07b4b07990811de121c0356155b2ba0f4318.tar.gz
 Patch0:		jpeg-xl-make-helpers-static.patch
+Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
-BuildRequires:	pkgconfig(libhwy)
+BuildRequires:	pkgconfig(libhwy) >= 1.0.7
 BuildRequires:	pkgconfig(opengl)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	cmake ninja
@@ -69,6 +72,7 @@ Tools for working with JPEG XL files
 
 %package -n %{libname}
 Summary:	Library for working with JPEG XL files
+Group:		System/Libraries
 Requires:	%{threadslibname} = %{EVRD}
 Requires:	%{name} = %{EVRD}
 %rename %{oldlibname}
@@ -76,8 +80,24 @@ Requires:	%{name} = %{EVRD}
 %description -n %{libname}
 Library for working with JPEG XL files
 
+%package -n %{cmsname}
+Summary:	CMS library for JPEG XL
+Requires:	%{name} = %{EVRD}
+Group:		System/Libraries
+
+%description -n %{cmsname}
+CMS library for JPEG XL
+
+%package -n %{extrasname}
+Summary:	Extra codecs for JPEG XL
+Group:		System/Libraries
+
+%description -n %{extrasname}
+Extra codecs for JPEG XL
+
 %package -n %{threadslibname}
 Summary:	Threading library used by the JPEG XL library
+Group:		System/Libraries
 %rename %{oldthreadslibname}
 
 %description -n %{threadslibname}
@@ -86,6 +106,7 @@ Threading library used by the JPEG XL library
 %package -n %{devname}
 Summary:	Development files for the JPEG XL library
 Requires:	%{libname} = %{EVRD}
+Group:		Development/C and C++
 
 %description -n %{devname}
 Development files for the JPEG XL library
@@ -93,6 +114,7 @@ Development files for the JPEG XL library
 %package -n %{staticname}
 Summary:	Static library for the JPEG XL library
 Requires:	%{devname} = %{EVRD}
+Group:		Development/C and C++
 
 %description -n %{staticname}
 Static library for the JPEG XL library
@@ -101,6 +123,7 @@ Static library for the JPEG XL library
 Summary:	JPEG XL plugin for gdk-pixbuf
 Requires:	%{libname} = %{EVRD}
 Supplements:	gdk-pixbuf2.0
+Group:		Development/C and C++
 
 %description gdk-pixbuf
 JPEG XL plugin for gdk-pixbuf
@@ -116,6 +139,7 @@ GIMP plugin for handling JPEG XL files
 %package java
 Summary:	Java library for handling JPEG XL files
 Requires:	%{libname} = %{EVRD}
+Group:		Development/Java
 
 %description java
 Java library for handling JPEG XL files
@@ -149,9 +173,11 @@ sed -i -e 's, QUIET,,g' tools/CMakeLists.txt
 	-G Ninja
 
 %build
+export LD_LIBRARY_PATH=$(pwd)/build/lib
 %ninja_build -C build
 
 %install
+export LD_LIBRARY_PATH=$(pwd)/build/lib
 %ninja_install -C build
 
 %files
@@ -159,8 +185,9 @@ sed -i -e 's, QUIET,,g' tools/CMakeLists.txt
 
 %files tools
 %{_bindir}/cjxl
-%{_bindir}/cjpeg_hdr
 %{_bindir}/djxl
+%{_bindir}/cjpegli
+%{_bindir}/djpegli
 %{_bindir}/jxlinfo
 %{_mandir}/man1/cjxl.1*
 %{_mandir}/man1/djxl.1*
@@ -168,20 +195,24 @@ sed -i -e 's, QUIET,,g' tools/CMakeLists.txt
 %files -n %{libname}
 %{_libdir}/libjxl.so.0*
 
+%files -n %{cmsname}
+%{_libdir}/libjxl_cms.so.0*
+
+%files -n %{extrasname}
+%{_libdir}/libjxl_extras_codec.so.0*
+
 %files -n %{threadslibname}
 %{_libdir}/libjxl_threads.so.0*
 
 %files -n %{devname}
 %{_includedir}/jxl
 %{_libdir}/libjxl.so
+%{_libdir}/libjxl_cms.so
+%{_libdir}/libjxl_extras_codec.so
 %{_libdir}/libjxl_threads.so
 %{_libdir}/pkgconfig/libjxl.pc
+%{_libdir}/pkgconfig/libjxl_cms.pc
 %{_libdir}/pkgconfig/libjxl_threads.pc
-
-%files -n %{staticname}
-%{_libdir}/libjxl.a
-%{_libdir}/libjxl_dec.a
-%{_libdir}/libjxl_threads.a
 
 %if %{with gdk_pixbuf}
 %files gdk-pixbuf
