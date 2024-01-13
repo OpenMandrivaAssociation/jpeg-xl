@@ -186,8 +186,6 @@ export LD_LIBRARY_PATH=$(pwd)/build/lib
 %files tools
 %{_bindir}/cjxl
 %{_bindir}/djxl
-%{_bindir}/cjpegli
-%{_bindir}/djpegli
 %{_bindir}/jxlinfo
 %{_mandir}/man1/cjxl.1*
 %{_mandir}/man1/djxl.1*
