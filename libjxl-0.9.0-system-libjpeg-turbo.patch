@@ -1,0 +1,22 @@
+diff -up libjxl-0.9.0/lib/jpegli.cmake.omv~ libjxl-0.9.0/lib/jpegli.cmake
+--- libjxl-0.9.0/lib/jpegli.cmake.omv~	2023-12-23 20:00:52.960845717 +0100
++++ libjxl-0.9.0/lib/jpegli.cmake	2023-12-23 20:02:57.918844743 +0100
+@@ -23,12 +23,12 @@ elseif(JPEGLI_LIBJPEG_LIBRARY_SOVERSION
+   set(JPEG_LIB_VERSION 80)
+ endif()
+ 
+-configure_file(
+-  ../third_party/libjpeg-turbo/jconfig.h.in include/jpegli/jconfig.h)
+-configure_file(
+-  ../third_party/libjpeg-turbo/jpeglib.h include/jpegli/jpeglib.h COPYONLY)
+-configure_file(
+-  ../third_party/libjpeg-turbo/jmorecfg.h include/jpegli/jmorecfg.h COPYONLY)
++#configure_file(
++#  ../third_party/libjpeg-turbo/jconfig.h.in include/jpegli/jconfig.h)
++#configure_file(
++#  ../third_party/libjpeg-turbo/jpeglib.h include/jpegli/jpeglib.h COPYONLY)
++#configure_file(
++#  ../third_party/libjpeg-turbo/jmorecfg.h include/jpegli/jmorecfg.h COPYONLY)
+ 
+ add_library(jpegli-static STATIC EXCLUDE_FROM_ALL "${JPEGXL_INTERNAL_JPEGLI_SOURCES}")
+ target_compile_options(jpegli-static PRIVATE "${JPEGXL_INTERNAL_FLAGS}")
