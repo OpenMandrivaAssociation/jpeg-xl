@@ -17,12 +17,13 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.9.2
+Version:	0.10.0
 Release:	%{?pre:0.%{pre}.}1
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/b25b07b4b07990811de121c0356155b2ba0f4318.tar.gz
+Source4:	image-jxl.xml
 Patch0:		jpeg-xl-make-helpers-static.patch
 Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
 BuildRequires:	pkgconfig(libbrotlienc)
@@ -179,6 +180,7 @@ export LD_LIBRARY_PATH=$(pwd)/build/lib
 %install
 export LD_LIBRARY_PATH=$(pwd)/build/lib
 %ninja_install -C build
+install -D -m 644 %{S:4} %{buildroot}%{_datadir}/mime/packages/image-jxl.xml
 
 %files
 %{_datadir}/mime/packages/image-jxl.xml
