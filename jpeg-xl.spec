@@ -18,7 +18,7 @@
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
 Version:	0.10.3
-Release:	%{?pre:0.%{pre}.}2
+Release:	%{?pre:0.%{pre}.}3
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
@@ -57,8 +57,8 @@ BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
 BuildRequires:	xdg-utils
 %endif
 %if %{with gimp}
-BuildRequires:	pkgconfig(gimp-2.0)
-BuildRequires:	pkgconfig(gimpui-2.0)
+BuildRequires:	pkgconfig(gimp-3.0)
+BuildRequires:	pkgconfig(gimpui-3.0)
 %endif
 
 %description
