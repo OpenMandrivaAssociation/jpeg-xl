@@ -26,6 +26,7 @@ Source3:	https://skia.googlesource.com/skcms/+archive/b25b07b4b07990811de121c035
 Source4:	image-jxl.xml
 Patch0:		jpeg-xl-make-helpers-static.patch
 Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
+BuildRequires:  pkgconfig(lcms2)
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
 BuildRequires:	pkgconfig(libhwy) >= 1.0.7
