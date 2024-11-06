@@ -1,5 +1,5 @@
 %bcond_without gdk_pixbuf
-%bcond_without gimp
+%bcond_with gimp
 %bcond_without java
 
 %define libname %mklibname jxl
