@@ -18,7 +18,7 @@
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
 Version:	0.10.3
-Release:	%{?pre:0.%{pre}.}3
+Release:	%{?pre:0.%{pre}.}4
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
@@ -78,6 +78,7 @@ Group:		System/Libraries
 Requires:	%{threadslibname} = %{EVRD}
 Requires:	%{name} = %{EVRD}
 %rename %{oldlibname}
+Obsoletes:	jpeg-xl-gimp < 0.10.3-5
 
 %description -n %{libname}
 Library for working with JPEG XL files
