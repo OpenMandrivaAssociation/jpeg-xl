@@ -1,5 +1,5 @@
 %bcond_without gdk_pixbuf
-%bcond_without gimp
+%bcond_with gimp
 %bcond_without java
 
 %define libname %mklibname jxl
@@ -17,8 +17,8 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.10.3
-Release:	%{?pre:0.%{pre}.}2
+Version:	0.11.0
+Release:	%{?pre:0.%{pre}.}1
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
@@ -29,6 +29,7 @@ Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
 BuildRequires:	pkgconfig(libhwy) >= 1.0.7
+BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(opengl)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	cmake ninja
@@ -164,10 +165,12 @@ cd ..
 # Debug java detection
 sed -i -e 's, QUIET,,g' tools/CMakeLists.txt
 
-# FIXME disabling JPEGXL_ENABLE_BENCHMARK is a workaround
-# for a clang 12 crash during linking
 %cmake \
-	-DJPEGXL_ENABLE_BENCHMARK:BOOL=OFF \
+	-DBUILD_TESTING:BOOL=OFF \
+	-DJPEGXL_ENABLE_BENCHMARK:BOOL=ON \
+	-DJPEGXL_FORCE_SYSTEM_BROTLI:BOOL=ON \
+	-DJPEGXL_FORCE_SYSTEM_HWY:BOOL=ON \
+	-DJPEGXL_FORCE_SYSTEM_LCMS2:BOOL=ON \
 %if %{with gdk_pixbuf} || %{with gimp}
 	-DJPEGXL_ENABLE_PLUGINS:BOOL=ON \
 %endif
@@ -186,6 +189,7 @@ install -D -m 644 %{S:4} %{buildroot}%{_datadir}/mime/packages/image-jxl.xml
 %{_datadir}/mime/packages/image-jxl.xml
 
 %files tools
+%{_bindir}/benchmark_xl
 %{_bindir}/cjxl
 %{_bindir}/djxl
 %{_bindir}/jxlinfo
@@ -198,9 +202,6 @@ install -D -m 644 %{S:4} %{buildroot}%{_datadir}/mime/packages/image-jxl.xml
 %files -n %{cmsname}
 %{_libdir}/libjxl_cms.so.0*
 
-%files -n %{extrasname}
-%{_libdir}/libjxl_extras_codec.so.0*
-
 %files -n %{threadslibname}
 %{_libdir}/libjxl_threads.so.0*
 
@@ -208,11 +209,13 @@ install -D -m 644 %{S:4} %{buildroot}%{_datadir}/mime/packages/image-jxl.xml
 %{_includedir}/jxl
 %{_libdir}/libjxl.so
 %{_libdir}/libjxl_cms.so
-%{_libdir}/libjxl_extras_codec.so
 %{_libdir}/libjxl_threads.so
 %{_libdir}/pkgconfig/libjxl.pc
 %{_libdir}/pkgconfig/libjxl_cms.pc
 %{_libdir}/pkgconfig/libjxl_threads.pc
+
+%files -n %{extrasname}
+%{_libdir}/libjxl_extras_codec.a
 
 %if %{with gdk_pixbuf}
 %files gdk-pixbuf
