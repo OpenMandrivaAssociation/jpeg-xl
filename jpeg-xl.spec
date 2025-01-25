@@ -26,6 +26,7 @@ Source3:	https://skia.googlesource.com/skcms/+archive/b25b07b4b07990811de121c035
 Source4:	image-jxl.xml
 Patch0:		jpeg-xl-make-helpers-static.patch
 Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
+BuildRequires:  pkgconfig(lcms2)
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
 BuildRequires:	pkgconfig(libhwy) >= 1.0.7
@@ -58,8 +59,8 @@ BuildRequires:	pkgconfig(gdk-pixbuf-2.0)
 BuildRequires:	xdg-utils
 %endif
 %if %{with gimp}
-BuildRequires:	pkgconfig(gimp-2.0)
-BuildRequires:	pkgconfig(gimpui-2.0)
+BuildRequires:	pkgconfig(gimp-3.0)
+BuildRequires:	pkgconfig(gimpui-3.0)
 %endif
 
 %description
@@ -78,6 +79,7 @@ Group:		System/Libraries
 Requires:	%{threadslibname} = %{EVRD}
 Requires:	%{name} = %{EVRD}
 %rename %{oldlibname}
+Obsoletes:	jpeg-xl-gimp < 0.10.3-5
 
 %description -n %{libname}
 Library for working with JPEG XL files
