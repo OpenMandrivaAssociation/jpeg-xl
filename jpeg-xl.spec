@@ -17,12 +17,12 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.11.1
-Release:	%{?pre:0.%{pre}.}2
+Version:	0.11.2
+Release:	%{?pre:0.%{pre}.}1
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
-Source3:	https://skia.googlesource.com/skcms/+archive/b25b07b4b07990811de121c0356155b2ba0f4318.tar.gz
+Source3:	https://skia.googlesource.com/skcms/+archive/96d9171c94b937a1b5f0293de7309ac16311b722.tar.gz
 Source4:	image-jxl.xml
 Patch0:		jpeg-xl-make-helpers-static.patch
 Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
@@ -155,7 +155,7 @@ tar xf %{S:1}
 mv lodepng-master lodepng
 tar xf %{S:2}
 rmdir sjpeg
-mv sjpeg-master sjpeg
+mv sjpeg-main sjpeg
 cd skcms
 tar xf %{S:3}
 cd ..
