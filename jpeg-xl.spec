@@ -17,15 +17,15 @@
 
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.11.2
+Version:	0.12.0
 Release:	%{?pre:0.%{pre}.}1
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
 Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
 Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
 Source3:	https://skia.googlesource.com/skcms/+archive/96d9171c94b937a1b5f0293de7309ac16311b722.tar.gz
 Source4:	image-jxl.xml
-Patch0:		jpeg-xl-make-helpers-static.patch
-Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
+# dropped (no longer applies): Patch0:		jpeg-xl-make-helpers-static.patch
+# dropped (no longer applies): Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
 BuildRequires:  pkgconfig(lcms2)
 BuildRequires:	pkgconfig(libbrotlienc)
 BuildRequires:	pkgconfig(libbrotlidec)
@@ -149,7 +149,7 @@ Group:		Development/Java
 Java library for handling JPEG XL files
 
 %prep
-%setup -qn libjxl-%{version}
+%setup -qn libjxl-%{version} -n libjxl-0.12.0
 cd third_party
 tar xf %{S:1}
 mv lodepng-master lodepng
