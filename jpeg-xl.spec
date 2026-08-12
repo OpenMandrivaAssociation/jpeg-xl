@@ -149,7 +149,7 @@ Group:		Development/Java
 Java library for handling JPEG XL files
 
 %prep
-%setup -qn libjxl-%{version} -n libjxl-0.12.0
+%setup -qn libjxl-%{version}
 cd third_party
 tar xf %{S:1}
 mv lodepng-master lodepng
@@ -158,8 +158,7 @@ rmdir sjpeg
 mv sjpeg-main sjpeg
 cd skcms
 tar xf %{S:3}
-cd ..
-cd ..
+cd ../..
 %autopatch -p1
 
 . %{_sysconfdir}/profile.d/90java.sh
@@ -195,6 +194,7 @@ install -D -m 644 %{S:4} %{buildroot}%{_datadir}/mime/packages/image-jxl.xml
 %{_bindir}/cjxl
 %{_bindir}/djxl
 %{_bindir}/jxlinfo
+%{_bindir}/jxltran
 %{_mandir}/man1/cjxl.1*
 %{_mandir}/man1/djxl.1*
 
