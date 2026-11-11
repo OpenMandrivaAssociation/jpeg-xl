@@ -1,5 +1,4 @@
 sources:
   96d9171c94b937a1b5f0293de7309ac16311b722.tar.gz: 249c6352d24381f5c33a8bf9fb2cd6d4dd4f0ffc
-  libjxl-0.12.0.tar.gz: 01155c1112c5ed26b9cbbb0ff066efc35f768767
-  lodepng.tar.gz: 12ba6dcc0f16e1a5a4537b04e0388b1defa1cbdd
-  sjpeg.tar.gz: 8a503e982ef9a66a2f97d4b9163d1bd32946d6ee
+  libjxl-0.13.0.tar.gz: 26dab5574bb3482a299d25d4be3d3df4d8f5c260
+  sjpeg-dd4d9857c58a25713711a46d37385ad23ca2177e.tar.gz: cbeb62a682a16443f7a141a06ff6a62e01cb0747

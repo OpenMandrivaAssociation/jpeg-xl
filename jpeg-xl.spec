@@ -15,20 +15,25 @@
 #define pre 20210521
 %define vtag %{?pre:%{majorminor}.x}%{!?pre:%{version}}
 
+%define sjpeg_commit dd4d9857c58a25713711a46d37385ad23ca2177e
+
 Summary:	Library for working with JPEG XL files
 Name:		jpeg-xl
-Version:	0.12.0
+Version:	0.13.0
 Release:	%{?pre:0.%{pre}.}1
+Group:		Graphics
 Source0:	https://github.com/libjxl/libjxl/archive/refs/tags/v%{version}/libjxl-%{version}.tar.gz
-Source1:	https://github.com/lvandeve/lodepng/archive/master/lodepng.tar.gz
-Source2:	https://github.com/webmproject/sjpeg/archive/master/sjpeg.tar.gz
-Source3:	https://skia.googlesource.com/skcms/+archive/96d9171c94b937a1b5f0293de7309ac16311b722.tar.gz
-Source4:	image-jxl.xml
+# sjpeg commit pinned by libjxl 0.13.0 deps.sh (webmproject/sjpeg).
+Source1:	https://github.com/webmproject/sjpeg/archive/%{sjpeg_commit}/sjpeg-%{sjpeg_commit}.tar.gz
+# skcms commit pinned by libjxl 0.13.0 deps.sh. Archive is flat.
+Source2:	https://skia.googlesource.com/skcms/+archive/96d9171c94b937a1b5f0293de7309ac16311b722.tar.gz
+Source3:	image-jxl.xml
 # dropped (no longer applies): Patch0:		jpeg-xl-make-helpers-static.patch
 # dropped (no longer applies): Patch1:		libjxl-0.9.0-system-libjpeg-turbo.patch
 BuildRequires:  pkgconfig(lcms2)
-BuildRequires:	pkgconfig(libbrotlienc)
-BuildRequires:	pkgconfig(libbrotlidec)
+# 0.13.0 vendors brotli 1.2.1 for CVE-2026-111497. Use that system version.
+BuildRequires:	pkgconfig(libbrotlienc) >= 1.2.1
+BuildRequires:	pkgconfig(libbrotlidec) >= 1.2.1
 BuildRequires:	pkgconfig(libhwy) >= 1.0.7
 BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(opengl)
@@ -151,13 +156,11 @@ Java library for handling JPEG XL files
 %prep
 %setup -qn libjxl-%{version}
 cd third_party
-tar xf %{S:1}
-mv lodepng-master lodepng
-tar xf %{S:2}
 rmdir sjpeg
-mv sjpeg-main sjpeg
+tar xf %{S:1}
+mv sjpeg-%{sjpeg_commit} sjpeg
 cd skcms
-tar xf %{S:3}
+tar xf %{S:2}
 cd ../..
 %autopatch -p1
 
@@ -184,7 +187,7 @@ export LD_LIBRARY_PATH=$(pwd)/build/lib
 %install
 export LD_LIBRARY_PATH=$(pwd)/build/lib
 %ninja_install -C build
-install -D -m 644 %{S:4} %{buildroot}%{_datadir}/mime/packages/image-jxl.xml
+install -D -m 644 %{S:3} %{buildroot}%{_datadir}/mime/packages/image-jxl.xml
 
 %files
 %{_datadir}/mime/packages/image-jxl.xml
